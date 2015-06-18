@@ -35,8 +35,8 @@ after_success: |
       mkdir -p latest &&
       cp -rf ../target/doc/* $VERSION &&
       cp -rf ../target/doc/* latest &&
-      git config --global user.email $GIT_EMAIL &&
-      git config --global user.name $GIT_USER &&
+      git config --global user.email dev@miadsafe.net &&
+      git config --global user.name maidsafe-jenkins &&
       git tag $VERSION -a -m "Version $VERSION" &&
       git push -q https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} --tags;
     fi
