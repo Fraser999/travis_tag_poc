@@ -23,6 +23,7 @@ after_success: |
     cd docs-stage &&
     git checkout gh-pages;
     rm -rf .git*;
+    # lines 27 - 31 is a patch script for handling old gh-pages structure
     OLD_FILE=$(ls | grep "main.js");
     if [[ $OLD_FILE == main* ]]; then 
       rm -rf * &&
@@ -30,7 +31,6 @@ after_success: |
     fi
     if [[ $COMMIT_MSG == versionchangeto* ]];  then
       VERSION=${COMMIT_MSG##*to} &&
-      echo VERSION - $VERSION &&
       mkdir -p $VERSION &&
       mkdir -p latest &&
       cp -rf ../target/doc/* $VERSION &&
