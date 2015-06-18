@@ -23,10 +23,8 @@ after_success: |
     cd docs-stage &&
     git checkout gh-pages;
     rm -rf .git*;
-    ls;
     OLD_FILE=$(ls | grep "main.js");
-    echo $OLD_FILE;
-    if [[ OLD_FILE == main* ]]; then 
+    if [[ $OLD_FILE == main* ]]; then 
       rm -rf * &&
       echo "<meta http-equiv=refresh content=0;url=master/`echo $TRAVIS_REPO_SLUG | cut -d '/' -f 2`/index.html>" > index.html;
     fi
