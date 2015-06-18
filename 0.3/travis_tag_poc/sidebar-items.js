@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get_version","Returns version number 0.2"]]});
