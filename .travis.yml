@@ -21,8 +21,13 @@ after_success: |
     COMMIT_MSG=$(git log -1 | tr '[:upper:]' '[:lower:]' | grep "version change to " | tr -d ' ') &&
     git clone https://github.com/${TRAVIS_REPO_SLUG}.git  docs-stage &&
     cd docs-stage &&
-    git checkout --orphan gh-pages;
+    git checkout gh-pages;
     rm -rf .git*;
+    OLD_FILE=$(ls | grep "main.js");
+    if [[ OLD_FILE == main* ]]; then 
+      rm -rf * &&
+      echo "<meta http-equiv=refresh content=0;url=master/`echo $TRAVIS_REPO_SLUG | cut -d '/' -f 2`/index.html>" > index.html;
+    fi
     if [[ $COMMIT_MSG == versionchangeto* ]];  then
       VERSION=${COMMIT_MSG##*to} &&
       echo VERSION - $VERSION &&
@@ -35,7 +40,8 @@ after_success: |
       git tag $VERSION -a -m "Version $VERSION" &&
       git push -q https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} --tags;
     fi
-    cp -rf ../target/doc/* . &&
+    mkdir -p master
+    cp -rf ../target/doc/* master &&
     cd .. &&
     ghp-import -n docs-stage &&
     git push -fq https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages;
