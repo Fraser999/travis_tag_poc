@@ -1,7 +1,7 @@
 
-/// Returns version number 0.2
+/// Returns version number 0.2.1
 pub fn get_version() -> String {
-    "version 0.2".to_string()
+    "version 0.2.1".to_string()
 }
 
 fn main() {
